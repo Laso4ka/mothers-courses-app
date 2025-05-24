@@ -1,0 +1,62 @@
+.course-card {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .course-image {
+    width: 100%;
+    height: 200px; // Or use aspect-ratio
+    object-fit: cover;
+  }
+
+  .course-content {
+    padding: 15px;
+    flex-grow: 1; // Allows content to take available space
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; // Pushes price/action to bottom
+  }
+
+  .course-title {
+    font-size: 1.4em;
+    margin-bottom: 5px;
+    color: var(--accent-color-1);
+  }
+
+  .course-tagline {
+    font-size: 0.95em;
+    color: var(--text-color);
+    margin-bottom: 10px;
+    min-height: 40px; // Helps align cards if taglines vary
+  }
+
+  .course-meta {
+    font-size: 0.85em;
+    color: #666;
+    margin-bottom: 15px;
+    span {
+      display: block; // Each meta item on new line for mobile
+      &:not(:last-child) {
+        margin-bottom: 3px;
+      }
+    }
+  }
+
+  .course-price-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto; // Pushes this block to the bottom of course-content
+  }
+
+  .course-price {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--accent-color-1);
+  }
+}

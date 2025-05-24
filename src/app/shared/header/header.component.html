@@ -1,0 +1,45 @@
+
+<header class="app-header">
+  <div class="container header-content">
+    <div class="logo" routerLink="/">
+      МамаКурси <!-- MomCourses -->
+    </div>
+
+    <nav class="desktop-nav">
+      <ul>
+        <li><a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Головна</a></li> <!-- Home -->
+        <li><a routerLink="/courses" routerLinkActive="active-link">Курси</a></li> <!-- Courses -->
+      </ul>
+    </nav>
+
+    <!-- ПОВЕРТАЄМО ЦЕЙ БЛОК -->
+    <div class="header-actions">
+      <!-- Приклад кнопки "Увійти" для десктопу, якщо потрібна -->
+      <!-- <button class="btn btn-outline-light hidden-mobile" (click)="navigateToLogin()">Увійти</button> -->
+
+      <!-- Кнопка бургер-меню для мобільних пристроїв -->
+      <button class="mobile-nav-toggle visible-mobile" (click)="toggleMobileNav()" aria-label="Перемкнути навігацію">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+    <!-- КІНЕЦЬ БЛОКУ, ЯКИЙ ПОВЕРТАЄМО -->
+
+  </div>
+
+  <nav class="mobile-nav" [class.open]="isMobileNavOpen">
+    <div class="mobile-nav-header">
+      <div class="logo" routerLink="/" (click)="closeMobileNav()">МамаКурси</div> <!-- MomCourses -->
+      <button class="mobile-nav-close" (click)="closeMobileNav()" aria-label="Закрити навігацію"> <!-- Close navigation -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <ul>
+      <li (click)="closeMobileNav()"><a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Головна</a></li> <!-- Home -->
+      <li (click)="closeMobileNav()"><a routerLink="/courses" routerLinkActive="active-link">Курси</a></li> <!-- Courses -->
+      <!-- Додайте сюди кнопку "Увійти" для мобільного меню, якщо вона потрібна -->
+      <!-- <li class="visible-mobile" (click)="closeMobileNav()"><button class="btn btn-secondary" (click)="navigateToLogin()">Увійти</button></li> -->
+    </ul>
+  </nav>
+</header>
+
+

@@ -1,0 +1,16 @@
+
+<div class="courses-page container">
+  <h1 class="page-title">Наші курси</h1>
+  <p class="page-intro">Ознайомтеся з нашим широким спектром курсів, розроблених для підтримки та розширення можливостей матерів на кожному етапі.</p>
+
+  <!-- Add filters/search bar here later if needed -->
+  <!-- <div class="filters-bar"> ... </div> -->
+
+  <div class="courses-list-grid" *ngIf="allCourses.length > 0; else noCourses">
+    <app-course-card *ngFor="let course of allCourses" [course]="course"></app-course-card>
+  </div>
+
+  <ng-template #noCourses>
+    <p class="text-center">На даний момент немає доступних курсів. Будь ласка, перевірте пізніше!</p>
+  </ng-template>
+</div>

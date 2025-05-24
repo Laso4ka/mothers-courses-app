@@ -1,1 +1,124 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+  --primary-color: #a0d2eb;   /* Light Blue */
+  // --primary-text-color: #333; // No longer primary text on light blue, will be white
+  --secondary-color: #ffaa00; /* Orange */
+  --secondary-color-darker: #e69500;
+  --secondary-text-color: #ffffff;
+  --accent-color-1: #003366; /* Dark Blue */
+  --accent-color-1-lighter: #004080;
+  --accent-text-color-1: #ffffff;
+  --background-color: #ffffff; /* White */
+  --text-color: #333333;      /* Default body text on white background */
+  --light-text-color: #ffffff; /* For text on dark/colored backgrounds */
+  --container-padding: 15px;
+  --border-radius: 8px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--accent-color-1); /* Dark blue for headings - good contrast */
+  margin-top: 0;
+}
+
+a {
+  color: var(--primary-color); /* Light blue for links on white background */
+  text-decoration: none;
+  &:hover {
+    color: var(--secondary-color); /* Orange for link hover */
+    text-decoration: underline;
+  }
+}
+
+.container {
+  max-width: 1200px; // Max width like the reference site
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border: none;
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: var(--secondary-color);
+  color: var(--secondary-text-color);
+  &:hover {
+    background-color: var(--secondary-color-darker);
+    color: var(--secondary-text-color); // Ensure text color remains
+    text-decoration: none;
+  }
+}
+
+.btn-secondary {
+  background-color: var(--accent-color-1);
+  color: var(--accent-text-color-1);
+  &:hover {
+    background-color: var(--accent-color-1-lighter);
+    color: var(--accent-text-color-1); // Ensure text color remains
+    text-decoration: none;
+  }
+}
+
+/* For buttons that should look like links but styled as buttons */
+.btn-outline-light { // For use on dark backgrounds
+  background-color: transparent;
+  color: var(--light-text-color);
+  border: 2px solid var(--light-text-color);
+  &:hover {
+    background-color: var(--light-text-color);
+    color: var(--accent-color-1); // Dark blue text on white hover
+    text-decoration: none;
+  }
+}
+
+.btn-outline-primary { // For use on light backgrounds
+  background-color: transparent;
+  color: var(--primary-color); // Light blue text
+  border: 2px solid var(--primary-color);
+  &:hover {
+    background-color: var(--primary-color);
+    color: var(--light-text-color); // White text
+    text-decoration: none;
+  }
+}
+
+
+/* Responsive utilities */
+.hidden-mobile {
+  @media (max-width: 767px) { // Breakpoint for mobile nav toggle
+    display: none !important;
+  }
+}
+
+.visible-mobile {
+  display: none !important;
+  @media (max-width: 767px) { // Breakpoint for mobile nav toggle
+    display: block !important;
+  }
+}
+
+/* Basic card styling to be extended by course-card */
+.card {
+  background-color: var(--background-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 20px;
+}

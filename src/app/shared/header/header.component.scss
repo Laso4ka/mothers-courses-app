@@ -1,0 +1,163 @@
+.app-header {
+  background-color: var(--primary-color); // Light Blue
+  color: var(--light-text-color);         // White text
+  padding: 15px 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--light-text-color); // White logo
+    cursor: pointer;
+    text-decoration: none;
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .desktop-nav {
+    flex-grow: 1; // Allow nav to take space
+    text-align: center; // Center the nav links
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: inline-flex; // Use inline-flex to center content
+    }
+
+    li {
+      margin: 0 15px; // Spacing between nav items
+    }
+
+    a {
+      color: var(--light-text-color); // White links
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 5px;
+      position: relative; // For active link underline
+
+      &:hover, &.active-link {
+        color: var(--secondary-color); // Orange on hover/active
+      }
+      &.active-link::after { // Underline for active link
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--secondary-color);
+      }
+    }
+
+    @media (max-width: 767px) {
+      display: none;
+    }
+  }
+
+  .header-actions {
+    .btn-outline-light { // Style for the "Login" button
+      padding: 8px 18px;
+      font-size: 0.9em;
+    }
+    .mobile-nav-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      svg {
+        stroke: var(--light-text-color); // White hamburger icon
+      }
+    }
+  }
+
+
+  .mobile-nav {
+    display: none;
+    position: fixed; // Full screen overlay
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-color); // Light blue background
+    z-index: 1001; // Above header content
+    overflow-y: auto;
+    padding: 20px var(--container-padding);
+    box-sizing: border-box;
+
+    &.open {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mobile-nav-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      .logo {
+        font-size: 1.6em; // Slightly smaller logo in mobile nav
+      }
+      .mobile-nav-close {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        svg {
+          stroke: var(--light-text-color); // White close icon
+        }
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: center;
+    }
+
+    li {
+      margin-bottom: 20px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      a {
+        color: var(--light-text-color); // White links
+        text-decoration: none;
+        font-size: 1.3em;
+        font-weight: 600;
+        display: block;
+        padding: 10px;
+
+        &:hover, &.active-link {
+          color: var(--secondary-color); // Orange on hover/active
+        }
+      }
+      .btn { // For buttons inside mobile nav like Login
+        width: 100%;
+        max-width: 200px;
+        margin: 10px auto 0;
+      }
+    }
+    @media (min-width: 768px) {
+      display: none !important;
+    }
+  }
+}
+
+// Ensure container in header doesn't add extra padding if header itself has padding
+.app-header > .container {
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}

@@ -1,0 +1,131 @@
+@use "sass:color";
+
+.app-footer {
+  background-color: var(--accent-color-1); // Dark Blue
+  color: var(--accent-text-color-1);     // White text
+  padding-top: 40px; // More padding at the top of footer content
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: 1fr; // Single column for mobile
+    gap: 30px;
+    padding-bottom: 40px;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); // Responsive columns
+      // Or specific columns like: grid-template-columns: 2fr 1fr 1fr;
+    }
+  }
+
+  .footer-column {
+    h3.footer-logo {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: var(--light-text-color); // White logo
+      margin-bottom: 15px;
+      text-decoration: none;
+      display: inline-block;
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    h4 {
+      font-size: 1.2em;
+      color: var(--light-text-color); // White headings
+      margin-bottom: 15px;
+      position: relative;
+      // Optional: underline for headings
+      // &::after {
+      //   content: '';
+      //   position: absolute;
+      //   bottom: -5px;
+      //   left: 0;
+      //   width: 30px;
+      //   height: 2px;
+      //   background-color: var(--secondary-color); // Orange
+      // }
+    }
+
+    p {
+      font-size: 0.95em;
+      line-height: 1.6;
+      margin-bottom: 10px;
+      color: #e0e0e0; // Slightly off-white for paragraphs for softer look
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      li {
+        margin-bottom: 8px;
+        a {
+          color: var(--primary-color); // Light Blue links
+          text-decoration: none;
+          &:hover {
+            color: var(--secondary-color); // Orange on hover
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    // Specific styles for contact info links if needed
+    &.contact-column p a {
+      color: var(--primary-color); // Light blue for email/phone links
+      &:hover {
+        color: var(--secondary-color);
+      }
+    }
+  }
+
+  .social-icons {
+    margin-top: 20px;
+    a {
+      display: inline-block;
+      color: var(--light-text-color);
+      border: 1px solid var(--light-text-color);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      line-height: 34px; // Adjust for vertical centering
+      text-align: center;
+      margin-right: 10px;
+      text-decoration: none;
+      font-size: 0.9em; // Adjust if using real icons
+      transition: background-color 0.3s, color 0.3s;
+
+      &:hover {
+        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
+        color: var(--accent-text-color-1); // White text on orange bg
+      }
+    }
+  }
+
+  .footer-bottom {
+    background-color: var(--accent-color-1); // Slightly darker strip
+    padding: 15px 0;
+    text-align: center;
+    font-size: 0.85em;
+    color: #ccc; // Lighter gray for copyright
+
+    p {
+      margin: 0;
+    }
+
+    a {
+      color: var(--primary-color); // Light blue for privacy/terms links
+      &:hover {
+        color: var(--secondary-color);
+      }
+    }
+  }
+}
+
+// Ensure container in footer doesn't add extra padding if footer itself has padding
+.app-footer .container {
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}

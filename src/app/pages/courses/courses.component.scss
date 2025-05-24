@@ -1,0 +1,40 @@
+.courses-page {
+  padding-top: 30px;
+  padding-bottom: 30px;
+
+  .page-title {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    color: var(--accent-color-1);
+  }
+
+  .page-intro {
+    text-align: center;
+    font-size: 1.1em;
+    color: var(--text-color);
+    margin-bottom: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .courses-list-grid {
+    display: grid;
+    grid-template-columns: 1fr; // Mobile: 1 column
+    gap: 25px;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr); // Tablet: 2 columns
+    }
+
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr); // Desktop: 3 columns
+    }
+  }
+
+  .text-center {
+    text-align: center;
+    margin-top: 20px;
+  }
+}
