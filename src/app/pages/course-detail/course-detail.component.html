@@ -1,0 +1,79 @@
+
+<div class="course-detail-page" *ngIf="course$ | async as course; else loadingOrError">
+
+  <section class="course-hero-section" [style.background-image]="'url(' + course.imageUrl + ')'">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <h1>{{ course.title }}</h1>
+      <p class="tagline" *ngIf="course.tagline">{{ course.tagline }}</p>
+    </div>
+  </section>
+
+  <div class="course-content-wrapper container">
+    <aside class="sidebar-content">
+      <div #priceActionBar class="price-action-bar">
+        <div class="price">
+          <span class="current-price">{{ course.price | currency:'USD':'symbol':'1.2-2' }}</span>
+        </div>
+        <button class="btn btn-primary btn-buy" (click)="buyCourse(course.id)">Купити курс</button>
+        <p class="duration-info" *ngIf="course.countOfVideos">{{ course.countOfVideos }} відео</p>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <section class="course-section description-section">
+        <h2>Про курс</h2>
+        <div [innerHTML]="course.description | replaceLineBreaks"></div>
+        <div *ngIf="course.longDescription" [innerHTML]="course.longDescription | replaceLineBreaks" class="long-description"></div>
+      </section>
+
+      <section class="course-section start-info-section">
+        <p><strong>Старт одразу після оплати</strong></p>
+      </section>
+
+      <section class="course-section additional-image-section" *ngIf="course.additionalImage">
+        <div class="additional-image-container">
+          <img [src]="course.additionalImage.imageUrl" [alt]="course.additionalImage.caption || course.title" class="additional-image">
+          <p class="caption" *ngIf="course.additionalImage.caption">{{ course.additionalImage.caption }}</p>
+        </div>
+        <div class="additional-image-description" [innerHTML]="course.additionalImage.descriptionText | replaceLineBreaks"></div>
+      </section>
+
+      <section class="course-section detail-blocks-section" *ngIf="course.detailBlocks && course.detailBlocks.length > 0">
+        <h2>Кому підходить цей курс?</h2>
+        <div class="detail-block-item" *ngFor="let block of course.detailBlocks">
+          <div class="detail-block-image-container">
+            <img [src]="block.imageUrl" [alt]="block.title || 'Деталь курсу'" class="detail-block-image">
+          </div>
+          <div class="detail-block-text-container">
+            <h3 *ngIf="block.title">{{ block.title }}</h3>
+            <p [innerHTML]="block.text | replaceLineBreaks"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="course-section text-blocks-section">
+        <div class="text-block" *ngIf="course.targetAudience">
+          <div [innerHTML]="course.targetAudience | replaceLineBreaks"></div>
+        </div>
+
+        <div class="text-block" *ngIf="course.learningOutcomes && course.learningOutcomes.length > 0">
+          <h3>Застереження та протипоказання до виконання вправ:</h3>
+          <ul>
+            <li *ngFor="let outcome of course.learningOutcomes">{{ outcome }}</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </div>
+  <div class="sticky-price-bar-placeholder visible-mobile"></div>
+</div>
+
+<ng-template #loadingOrError>
+  <div class="container text-center" style="padding: 50px 0;">
+    <p>Завантаження даних курсу або курс не знайдено...</p>
+    <a routerLink="/courses" class="btn btn-secondary">Повернутися до курсів</a>
+  </div>
+</ng-template>
+
+

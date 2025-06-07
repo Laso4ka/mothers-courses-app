@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; // For *ngFor, *ngIf
-import { Course } from '../../services/course.model';
+import { CommonModule } from '@angular/common';
+import { Course } from '../../models/course.model';
 import { CourseService } from '../../services/course.service';
-import { CourseCardComponent } from '../../components/course-card/course-card.component'; // Import the standalone component
+import { CourseCardComponent } from '../../components/course-card/course-card.component';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-courses',
@@ -15,13 +16,11 @@ import { CourseCardComponent } from '../../components/course-card/course-card.co
   styleUrls: ['./courses.component.scss']
 })
 export class CoursesComponent implements OnInit {
-  allCourses: Course[] = [];
+  allCourses$: Observable<Course[]>;
 
-  constructor(private courseService: CourseService) {}
-
-  ngOnInit(): void {
-    this.courseService.getAllCourses().subscribe(courses => {
-      this.allCourses = courses;
-    });
+  constructor(private courseService: CourseService) { // Використовуємо оновлений CourseService
+    this.allCourses$ = this.courseService.getAllCourses();
   }
+
+  ngOnInit(): void {}
 }

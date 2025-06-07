@@ -2,9 +2,15 @@ import { Component, OnInit, AfterViewInit, OnDestroy, Inject, PLATFORM_ID, ViewC
 import { isPlatformBrowser, CommonModule } from '@angular/common'; // CommonModule для *ngFor
 import { RouterLink } from '@angular/router'; // Якщо є посилання
 import { CourseCardComponent } from '../../components/course-card/course-card.component'; // Якщо використовується
-import { Course } from '../../services/course.model'; // Якщо використовується
+import { Course } from '../../models/course.model'; // Якщо використовується
 import { CourseService } from '../../services/course.service'; // Якщо використовується
-import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o'; // Імпортуємо модуль та опції
+import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { Observable } from 'rxjs';
+import {Certificate} from '../../models/certificate.model';
+import {CertificateService} from '../../services/certificate.service';
+import {HomePageService} from '../../services/home-page.service';
+import {HomePageContent} from '../../models/home-page-content.model';
+import {ReplaceLineBreaksPipe} from '../../shared/pipes/replace-line-breaks.pipe'; // Імпортуємо модуль та опції
 
 @Component({
   selector: 'app-home',
@@ -13,56 +19,55 @@ import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o'; // Імпорт
     CommonModule,
     RouterLink,
     CourseCardComponent,
-    CarouselModule
+    CarouselModule,
+    ReplaceLineBreaksPipe
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
-  // Template reference variable для контейнера Swiper
-  @ViewChild('certificatesSwiperContainer') certificatesSwiperContainer!: ElementRef;
-
-  featuredCourses: Course[] = []; // Залиште, якщо потрібно
-
-  // Дані для слайдів (замініть на ваші реальні дані)
-  certificates: { imageUrl: string, caption: string }[] = [
-    { imageUrl: 'https://placehold.co/600x400/003366/FFFFFF?text=Сертифікат+1+New', caption: 'Сертифікат "Ранній розвиток"' },
-    { imageUrl: 'https://placehold.co/600x400/a0d2eb/000000?text=Сертифікат+2+New', caption: 'Диплом "Дитяча психологія"' },
-    { imageUrl: 'https://placehold.co/600x400/ffaa00/FFFFFF?text=Сертифікат+3+New', caption: 'Посвідчення "Консультант ГВ"' },
-    { imageUrl: 'https://placehold.co/600x400/003366/FFFFFF?text=Сертифікат+4+New', caption: 'Курс "Позитивне батьківство"' },
-    { imageUrl: 'https://placehold.co/600x400/cccccc/000000?text=Сертифікат+5+New', caption: 'Інший важливий сертифікат' },
-  ];
-
+export class HomeComponent{
+  homePageContent$: Observable<HomePageContent | undefined>;
+  isBrowser: boolean;
   certificateOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: false,
-    dots: true, // Показувати крапки пагінації
+    dots: true,
     navSpeed: 700,
-    margin: 20, // ВІДСТУП МІЖ ЕЛЕМЕНТАМИ
+    margin: 20,
     responsive: {
-      0: { // Для екранів від 0px
-        items: 1 // Один елемент
+      0: {
+        items: 1
       },
-      768: { // Для екранів від 768px
-        items: 2 // Два елементи
+      768: {
+        items: 2
       },
-      1024: { // Для екранів від 1024px
-        items: 3 // Три елементи
+      1024: {
+        items: 3
       }
     },
   };
+  featuredCourses$: Observable<Course[]>;
+  certificates$: Observable<Certificate[]>;
 
   constructor(
-    private courseService: CourseService, // Залиште, якщо потрібно
+    private courseService: CourseService,
+    private certificateService: CertificateService,
+    private homePageService: HomePageService, // Інжектуємо новий сервіс
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+    this.homePageContent$ = this.homePageService.getHomePageContent();
+    this.certificates$ = this.certificateService.getCertificates();
+    this.featuredCourses$ = this.courseService.getFeaturedCourses(3); // Завантажуємо, наприклад, 3 рекомендованих
+
+    this.homePageContent$.subscribe(obj => {console.log(obj)});
   }
 
-  ngOnInit(): void {
-    // Завантаження інших даних, якщо потрібно
-    this.courseService.getFeaturedCourses(2).subscribe(courses => {
-      this.featuredCourses = courses;
-    });
+  navigateTo(url: string): void {
+    if (this.isBrowser) {
+      window.open(url, '_blank');
+    }
   }
 }

@@ -6,8 +6,8 @@
   <!-- Add filters/search bar here later if needed -->
   <!-- <div class="filters-bar"> ... </div> -->
 
-  <div class="courses-list-grid" *ngIf="allCourses.length > 0; else noCourses">
-    <app-course-card *ngFor="let course of allCourses" [course]="course"></app-course-card>
+  <div class="courses-list-grid" *ngIf="(allCourses$| async)?.length; else noCourses">
+    <app-course-card *ngFor="let course of (allCourses$| async)" [course]="course"></app-course-card>
   </div>
 
   <ng-template #noCourses>
