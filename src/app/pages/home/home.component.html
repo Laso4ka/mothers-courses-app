@@ -91,7 +91,6 @@
           <ng-template carouselSlide *ngFor="let certificate of certificates$ | async" [id]="certificate.imageUrl">
             <div class="certificate-slide-item-owl">
               <img [src]="certificate.imageUrl" [alt]="certificate.caption" class="certificate-image-owl">
-              <p class="certificate-caption-owl">{{ certificate.caption }}</p>
             </div>
           </ng-template>
         </owl-carousel-o>

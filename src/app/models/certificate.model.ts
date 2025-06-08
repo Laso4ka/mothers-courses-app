@@ -3,3 +3,4 @@ export interface Certificate {
   imageUrl: string;
   caption: string;
 }
+
