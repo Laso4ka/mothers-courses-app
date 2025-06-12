@@ -112,27 +112,55 @@
 }
 
 .info-blocks-section {
-  background-color: #f9f9f9;
+  background-color: #f9f9f9; // Або var(--background-color), якщо хочете білий
+
   .info-blocks-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 30px; // Відстань між блоками
+
     @media (min-width: 768px) {
       grid-template-columns: repeat(3, 1fr);
+      gap: 20px; // Можна трохи зменшити на десктопі
+    }
+    @media (min-width: 992px) {
+      gap: 30px; // Або повернути, якщо є місце
     }
   }
+
   .info-block-item {
     text-align: center;
-    padding: 20px;
-    h3 {
-      font-size: 1.4em;
-      color: var(--accent-color-1);
-      margin-bottom: 10px;
+    padding: 25px 20px;
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); // Легка тінь
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .info-block-icon-container {
+      margin-bottom: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .info-block-icon {
+        width: 60px;
+        height: 60px;
+      }
     }
+
+    h3 {
+      font-size: 1.5em; // Трохи більший заголовок
+      color: var(--accent-color-1);
+      margin-bottom: 15px; // Збільшимо відступ
+      line-height: 1.3;
+    }
+
     p {
-      font-size: 0.95em;
+      font-size: 1em; // Трохи більший текст
       color: var(--text-color);
-      line-height: 1.6;
+      line-height: 1.7;
     }
   }
 }

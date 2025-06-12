@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Only if you use ngIf/ngFor etc. Not strictly needed for the example.
+import { CommonModule } from '@angular/common';
+import {Observable} from 'rxjs';
+import {SiteSettingsService} from '../../services/site-settings.service'; // Only if you use ngIf/ngFor etc. Not strictly needed for the example.
 
 @Component({
   selector: 'app-footer',

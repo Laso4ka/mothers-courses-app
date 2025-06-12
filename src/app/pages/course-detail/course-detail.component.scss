@@ -256,6 +256,31 @@
   }
 }
 
+.custom-list-icons {
+  list-style-type: none; // Прибираємо стандартні маркери
+  padding-left: 0; // Прибираємо стандартний відступ зліва
+
+  li {
+    position: relative; // Для позиціонування псевдоелемента
+    padding-left: 30px; // Створюємо місце для іконки
+    margin-bottom: 10px; // Збільшимо відступ між пунктами
+    line-height: 1.6; // Для кращої читабельності, якщо текст багаторядковий
+    list-style: none;
+
+    &::before {
+      content: '❌'; // Ваша іконка-емодзі (наприклад, дитина)
+      position: absolute;
+      left: 0;
+      top: 0; // Або налаштуйте top для кращого вертикального вирівнювання
+      color: var(--secondary-color); // Колір іконки (помаранчевий)
+      font-size: 1.2em; // Розмір іконки
+      // Для SVG може знадобитися налаштування width/height
+      // width: 18px;
+      // height: 18px;
+    }
+  }
+}
+
 .loadingOrError {
   display: flex;
   flex-direction: column;
@@ -265,6 +290,31 @@
   .btn-secondary {
     margin-top: 20px;
   }
+}
+
+.btn {
+  min-width: 180px;
+  padding: 12px 25px;
+  font-size: 1em;
+}
+.btn-primary {
+  background-color: var(--secondary-color);
+  color: var(--secondary-text-color);
+  &:hover {
+    background-color: var(--secondary-color-darker);
+  }
+}
+.btn-outline-light {
+  border-color: var(--light-text-color);
+  color: var(--light-text-color);
+  &:hover {
+    background-color: var(--light-text-color);
+    color: var(--primary-color);
+  }
+}
+
+.additional-image-description-tag {
+  text-align: center;
 }
 
 // Адаптація для десктопа Hero та Additional Image

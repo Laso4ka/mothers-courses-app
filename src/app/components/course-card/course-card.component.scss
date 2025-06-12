@@ -10,7 +10,7 @@
 
   .course-image {
     width: 100%;
-    height: 200px; // Or use aspect-ratio
+    height: 300px; // Or use aspect-ratio
     object-fit: cover;
   }
 
@@ -18,21 +18,23 @@
     padding: 15px;
     flex-grow: 1; // Allows content to take available space
     display: flex;
+    text-align: center;
     flex-direction: column;
     justify-content: space-between; // Pushes price/action to bottom
   }
 
   .course-title {
-    font-size: 1.4em;
-    margin-bottom: 5px;
+    font-size: 1.6em;
+    margin: 0;
     color: var(--accent-color-1);
   }
 
   .course-tagline {
-    font-size: 0.95em;
+    font-size: 1.1em;
+    margin: 0;
+    font-weight: 600;
     color: var(--text-color);
-    margin-bottom: 10px;
-    min-height: 40px; // Helps align cards if taglines vary
+    min-height: 30px; // Helps align cards if taglines vary
   }
 
   .course-meta {

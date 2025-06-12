@@ -9,10 +9,8 @@ export interface Course {
   title: string;         // Залишається (для заголовка на фоні)
   tagline: string;       // Можна використовувати як підзаголовок
   description: string;   // Основний опис курсу (пункт 3)
-  instructor: string;
   price: number;         // Залишається (для ціни)
   imageUrl: string;      // Головне зображення курсу (для фону в пункті 1)
-  countOfVideos: number;
   isFeatured?: boolean;
   slug?: string;
   longDescription?: string; // Довший опис, якщо потрібно (альтернатива або доповнення до description)
@@ -24,6 +22,7 @@ export interface Course {
     imageUrl: string;
     caption: string;
     descriptionText: string;
+    descriptionTag: string;
   };
 
   detailBlocks?: CourseDetailBlock[]; // Для пункту 6 (масив фото та тексту)

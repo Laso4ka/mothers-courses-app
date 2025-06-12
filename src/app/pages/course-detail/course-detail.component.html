@@ -8,15 +8,13 @@
       <p class="tagline" *ngIf="course.tagline">{{ course.tagline }}</p>
     </div>
   </section>
-
   <div class="course-content-wrapper container">
     <aside class="sidebar-content">
       <div #priceActionBar class="price-action-bar">
         <div class="price">
-          <span class="current-price">{{ course.price | currency:'USD':'symbol':'1.2-2' }}</span>
+          <span class="current-price">{{ course.price.toFixed(2) }}₴</span>
         </div>
         <button class="btn btn-primary btn-buy" (click)="buyCourse(course.id)">Купити курс</button>
-        <p class="duration-info" *ngIf="course.countOfVideos">{{ course.countOfVideos }} відео</p>
       </div>
     </aside>
 
@@ -34,13 +32,16 @@
       <section class="course-section additional-image-section" *ngIf="course.additionalImage">
         <div class="additional-image-container">
           <img [src]="course.additionalImage.imageUrl" [alt]="course.additionalImage.caption || course.title" class="additional-image">
-          <p class="caption" *ngIf="course.additionalImage.caption">{{ course.additionalImage.caption }}</p>
+          <h3 class="caption" *ngIf="course.additionalImage.caption">{{ course.additionalImage.caption }}</h3>
         </div>
-        <div class="additional-image-description" [innerHTML]="course.additionalImage.descriptionText | replaceLineBreaks"></div>
+        <div class="additional-image-description">
+          <h3 class="additional-image-description-tag">{{course.additionalImage.descriptionTag}}</h3>
+          <div  [innerHTML]="course.additionalImage.descriptionText | replaceLineBreaks"></div>
+        </div>
       </section>
 
       <section class="course-section detail-blocks-section" *ngIf="course.detailBlocks && course.detailBlocks.length > 0">
-        <h2>Кому підходить цей курс?</h2>
+        <h2>Курс підходить для батьків які:</h2>
         <div class="detail-block-item" *ngFor="let block of course.detailBlocks">
           <div class="detail-block-image-container">
             <img [src]="block.imageUrl" [alt]="block.title || 'Деталь курсу'" class="detail-block-image">
@@ -52,6 +53,8 @@
         </div>
       </section>
 
+      <button *ngIf="actualTelegramLink" (click)="navigateTo(actualTelegramLink)" class="btn btn-outline-light btn-lg">telegram<i class="fab fa-telegram"></i> </button>
+
       <section class="course-section text-blocks-section">
         <div class="text-block" *ngIf="course.targetAudience">
           <div [innerHTML]="course.targetAudience | replaceLineBreaks"></div>
@@ -59,7 +62,7 @@
 
         <div class="text-block" *ngIf="course.learningOutcomes && course.learningOutcomes.length > 0">
           <h3>Застереження та протипоказання до виконання вправ:</h3>
-          <ul>
+          <ul class="custom-list-icons">
             <li *ngFor="let outcome of course.learningOutcomes">{{ outcome }}</li>
           </ul>
         </div>

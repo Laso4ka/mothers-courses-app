@@ -10,6 +10,7 @@ export interface HeroSectionData {
 export interface InfoBlockData {
   title: string;
   text: string;
+  iconName?: string;
 }
 
 export interface AuthorData {

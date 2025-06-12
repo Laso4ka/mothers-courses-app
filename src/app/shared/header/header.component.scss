@@ -16,7 +16,8 @@
 
   .logo {
     font-size: 1.8em;
-    font-weight: bold;
+    font-weight: 700;
+    font-family: Comfortaa, sans-serif;
     color: var(--light-text-color); // White logo
     cursor: pointer;
     text-decoration: none;
@@ -27,7 +28,7 @@
 
   .desktop-nav {
     flex-grow: 1; // Allow nav to take space
-    text-align: center; // Center the nav links
+    text-align: right; // Center the nav links
 
     ul {
       list-style: none;
@@ -43,7 +44,8 @@
     a {
       color: var(--light-text-color); // White links
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
+      font-family: Comfortaa, sans-serif;
       padding-bottom: 5px;
       position: relative; // For active link underline
 

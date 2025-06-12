@@ -16,6 +16,7 @@ import { switchMap } from 'rxjs/operators';
 import { CourseService } from '../../services/course.service';
 import { ReplaceLineBreaksPipe } from '../../shared/pipes/replace-line-breaks.pipe';
 import {Course} from '../../models/course.model';
+import {SiteSettingsService} from '../../services/site-settings.service';
 
 @Component({
   selector: 'app-course-detail',
@@ -27,6 +28,8 @@ import {Course} from '../../models/course.model';
 export class CourseDetailComponent implements AfterViewInit, OnDestroy {
   course$: Observable<Course | undefined>;
   isBrowser: boolean;
+  telegramLink$: Observable<string | undefined>;
+  actualTelegramLink = ""
   @ViewChild('priceActionBar') priceActionBarRef!: ElementRef<HTMLDivElement>; // Додаємо Ref на панель
 
   constructor(
@@ -34,8 +37,11 @@ export class CourseDetailComponent implements AfterViewInit, OnDestroy {
     private router: Router,
     private courseService: CourseService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private siteSettingsService: SiteSettingsService
   ) {
+    this.telegramLink$ = this.siteSettingsService.globalTelegramLink$ || "";
+    this.telegramLink$.subscribe(el => this.actualTelegramLink = el || "");
     this.isBrowser = isPlatformBrowser(this.platformId);
     this.course$ = this.route.paramMap.pipe(
       switchMap(params => {
@@ -85,9 +91,15 @@ export class CourseDetailComponent implements AfterViewInit, OnDestroy {
     this.course$.subscribe(course => { // Потрібно буде відписатися, або зробити це одноразово
       if (course && courseId) {
         console.log('Купити курс:', courseId, course.title);
-        alert(`Ви обрали курс "${course.title}". Функція купівлі в розробці!`);
+        alert(`Ви обрали курс "{course.title}₴". Функція купівлі в розробці!`);
       }
     }).unsubscribe();
+  }
+
+  navigateTo(url: string): void {
+    if (this.isBrowser) {
+      window.open(url, '_blank');
+    }
   }
 
 }

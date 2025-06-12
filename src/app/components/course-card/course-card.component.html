@@ -4,12 +4,9 @@
     <h3 class="course-title">{{ course.title }}</h3>
     <p class="course-tagline">{{ course.tagline }}</p>
     <div class="course-meta">
-      <span>Автор: {{ course.instructor }}</span>
-      <span>{{ course.countOfVideos }} Відео уроків</span>
     </div>
     <div class="course-price-action">
-      <span class="course-price">${{ course.price.toFixed(2) }}</span>
-      <!-- If you want this to navigate, you'll need RouterLink imported -->
+      <span class="course-price">{{ course.price.toFixed(2) }}₴</span>
       <a [routerLink]="['/course', course.slug]" (click)="console.log(course)" class="btn btn-primary">Детальніше</a>
 <!--      <button class="btn btn-primary">Детальніше</button>-->
     </div>
