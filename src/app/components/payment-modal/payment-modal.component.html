@@ -1,0 +1,37 @@
+<div class="modal-overlay" *ngIf="isVisible" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <button class="close-button" (click)="closeModal()" aria-label="Закрити">×</button>
+
+    <h2>Оформлення замовлення</h2>
+    <p *ngIf="courseToBuy">Курс: <strong>{{ courseToBuy.title }}</strong></p>
+    <p *ngIf="courseToBuy">Вартість: <strong>{{ courseToBuy.price | currency:'UAH':'symbol':'1.2-2' }}</strong></p>
+
+    <form [formGroup]="paymentForm" (ngSubmit)="proceedToPayment()">
+      <div class="form-group">
+        <label for="telegramUsername">Ваш Telegram Username</label>
+        <input type="text" id="telegramUsername" formControlName="telegramUsername" placeholder="@username">
+        <div *ngIf="telegramUsername?.invalid && (telegramUsername?.dirty || telegramUsername?.touched)" class="error-message">
+          <span *ngIf="telegramUsername?.errors?.['required']">Telegram Username обов'язковий.</span>
+          <span *ngIf="telegramUsername?.errors?.['pattern']">Невірний формат Telegram Username (наприклад: &#64;user_name)</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="phoneNumber">Номер телефону</label>
+        <input type="tel" id="phoneNumber" formControlName="phoneNumber" placeholder="+380XXXXXXXXX">
+        <div *ngIf="phoneNumber?.invalid && (phoneNumber?.dirty || phoneNumber?.touched)" class="error-message">
+          <span *ngIf="phoneNumber?.errors?.['required']">Номер телефону обов'язковий.</span>
+          <span *ngIf="phoneNumber?.errors?.['pattern']">Невірний формат номера (наприклад: +380991234567)</span>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-submit" [disabled]="paymentForm.invalid || isProcessingPayment">
+        <span *ngIf="!isProcessingPayment">Оплатити через LiqPay</span>
+        <span *ngIf="isProcessingPayment">Переходимо до оплати...</span>
+      </button>
+    </form>
+
+    <form #liqpayForm method="POST" action="https://www.liqpay.ua/api/3/checkout" acceptCharset="utf-8" style="display: none;"></form>
+  </div>
+</div>
+

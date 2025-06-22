@@ -1,0 +1,152 @@
+@import '../../../styles.scss'; // Для доступу до змінних кольорів
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050; // Вище за інші елементи
+  opacity: 1;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+
+.modal-content {
+  background-color: var(--background-color);
+  padding: 25px 30px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+
+  h2 {
+    color: var(--accent-color-1);
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+  }
+
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #aaa;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    &:hover {
+      color: var(--text-color);
+    }
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text-color);
+      .tooltip-trigger {
+        margin-left: 5px;
+        color: var(--primary-color);
+        cursor: help;
+        i {
+          font-size: 0.9em;
+        }
+      }
+    }
+    input[type="text"], input[type="tel"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: var(--border-radius);
+      box-sizing: border-box;
+      font-size: 1em;
+      &:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.2); // Потрібно визначити --primary-color-rgb
+      }
+    }
+    .error-message {
+      color: #e74c3c;
+      font-size: 0.85em;
+      margin-top: 5px;
+    }
+  }
+
+  .tooltip-container {
+    position: absolute; // Або відносне позиціонування, залежно від верстки
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    font-size: 0.85em;
+    z-index: 10; // Поверх інших елементів форми
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    width: auto; // Або max-width
+    max-width: 280px;
+    // Розташуйте його поруч з іконкою "i" за допомогою top/left/transform
+    // Це потребує більш точного налаштування залежно від вашої верстки
+    p {
+      margin-bottom: 5px;
+      line-height: 1.4;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1em;
+  }
+
+  // Стилі для повідомлень про результат оплати
+  .payment-result {
+    text-align: center;
+    padding: 20px 0;
+    h3 {
+      margin-top: 15px;
+      margin-bottom: 10px;
+      font-size: 1.5em;
+    }
+    p {
+      margin-bottom: 20px;
+    }
+    .fas { // Для Font Awesome іконок
+      font-size: 3em;
+      margin-bottom: 15px;
+    }
+    &.success .fas { color: #2ecc71; }
+    &.failure .fas { color: #e74c3c; }
+
+    .btn { margin: 5px; }
+  }
+}
+
+// Адаптивність для модального вікна, якщо потрібно
+@media (max-width: 576px) {
+  .modal-content {
+    padding: 20px 15px;
+    h2 {
+      font-size: 1.5em;
+    }
+  }
+}

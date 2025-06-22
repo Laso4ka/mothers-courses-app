@@ -4,6 +4,12 @@ export interface CourseDetailBlock { // Для блоків "фото зліва
   title?: string; // Опціональний заголовок для блоку
 }
 
+export interface TargetAudience {
+  text: string;
+  iconBefore?: string;
+  iconAfter?: string;
+}
+
 export interface Course {
   id?: string;
   title: string;         // Залишається (для заголовка на фоні)
@@ -15,7 +21,7 @@ export interface Course {
   slug?: string;
   longDescription?: string; // Довший опис, якщо потрібно (альтернатива або доповнення до description)
   whatsIncluded?: string[]; // Список того, що входить в курс (для одного з текстових блоків 7-9)
-  targetAudience?: string; // Цільова аудиторія (для одного з текстових блоків 7-9)
+  targetAudience?: TargetAudience; // Цільова аудиторія (для одного з текстових блоків 7-9)
   learningOutcomes?: string[]; // Результати навчання (для одного з текстових блоків 7-9)
 
   additionalImage?: { // Для пункту 5 (ще 1 фото і текст опис його)

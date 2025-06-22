@@ -150,6 +150,8 @@
   h2 {
     font-size: 1.6em;
     color: var(--accent-color-1);
+    width: 100%;
+    text-align: center;
     margin-bottom: 15px;
     padding-bottom: 8px;
     border-bottom: 2px solid var(--primary-color);
@@ -200,6 +202,9 @@
 }
 
 .detail-blocks-section {
+  detail-blocks-section-title{
+    margin: 0 auto;
+  }
   .detail-block-item {
     display: flex;
     flex-direction: column;
@@ -255,6 +260,35 @@
     }
   }
 }
+
+
+.target-audience-content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+  margin: 4rem 0;
+
+  background-color: var(--primary-color-lighter-15);
+  padding: 25px 30px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  .target-audience-text {
+    flex-grow: 1;
+    line-height: 1.7;
+    color: var(--text-color);
+    font-size: 0.95em;
+  }
+
+  .target-audience-icon {
+    width: 5rem;
+    height: 5rem;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+}
+
 
 .custom-list-icons {
   list-style-type: none; // Прибираємо стандартні маркери

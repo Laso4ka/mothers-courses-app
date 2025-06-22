@@ -20,7 +20,7 @@
       <div class="info-blocks-grid">
         <div class="info-block-item" *ngFor="let block of content.infoBlocks">
           <div class="info-block-icon-container" *ngIf="block.iconName">
-            <img [src]="'assets/icons/' + block.iconName + '.png'" [alt]="" class="info-block-icon">
+            <img [src]=block.iconName [alt]="" class="info-block-icon">
           </div>
           <h3>{{ block.title }}</h3>
           <p>{{ block.text }}</p>

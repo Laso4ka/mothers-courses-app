@@ -1,6 +1,4 @@
-
 <div class="course-detail-page" *ngIf="course$ | async as course; else loadingOrError">
-
   <section class="course-hero-section" [style.background-image]="'url(' + course.imageUrl + ')'">
     <div class="hero-overlay"></div>
     <div class="container hero-content">
@@ -14,7 +12,7 @@
         <div class="price">
           <span class="current-price">{{ course.price.toFixed(2) }}₴</span>
         </div>
-        <button class="btn btn-primary btn-buy" (click)="buyCourse(course.id)">Купити курс</button>
+        <button class="btn btn-primary btn-buy" (click)="openPaymentModal()">Купити курс</button>
       </div>
     </aside>
 
@@ -41,7 +39,7 @@
       </section>
 
       <section class="course-section detail-blocks-section" *ngIf="course.detailBlocks && course.detailBlocks.length > 0">
-        <h2>Курс підходить для батьків які:</h2>
+        <h2 class="detail-blocks-section-title">Курс підходить для батьків які:</h2>
         <div class="detail-block-item" *ngFor="let block of course.detailBlocks">
           <div class="detail-block-image-container">
             <img [src]="block.imageUrl" [alt]="block.title || 'Деталь курсу'" class="detail-block-image">
@@ -53,15 +51,16 @@
         </div>
       </section>
 
-      <button *ngIf="actualTelegramLink" (click)="navigateTo(actualTelegramLink)" class="btn btn-outline-light btn-lg">telegram<i class="fab fa-telegram"></i> </button>
-
       <section class="course-section text-blocks-section">
-        <div class="text-block" *ngIf="course.targetAudience">
-          <div [innerHTML]="course.targetAudience | replaceLineBreaks"></div>
+
+        <div class="target-audience-content" *ngIf="course.targetAudience">
+          <img *ngIf="course.targetAudience.iconBefore" [src]="course.targetAudience.iconBefore" alt="Іконка" class="target-audience-icon icon-before">
+          <div [innerHTML]="course.targetAudience.text | replaceLineBreaks"></div>
+          <img *ngIf="course.targetAudience.iconAfter" [src]="course.targetAudience.iconAfter" alt="Іконка" class="target-audience-icon icon-after">
         </div>
 
         <div class="text-block" *ngIf="course.learningOutcomes && course.learningOutcomes.length > 0">
-          <h3>Застереження та протипоказання до виконання вправ:</h3>
+          <h2>Застереження та протипоказання до виконання вправ:</h2>
           <ul class="custom-list-icons">
             <li *ngFor="let outcome of course.learningOutcomes">{{ outcome }}</li>
           </ul>
@@ -69,8 +68,14 @@
       </section>
     </div>
   </div>
-  <div class="sticky-price-bar-placeholder visible-mobile"></div>
 </div>
+
+<app-payment-modal
+  [isVisible]="showPaymentModal"
+  [courseToBuy]="currentCourse"
+  (closeModalEvent)="handleCloseModal()"
+  (paymentSuccessfulEvent)="handlePaymentSuccess($event)">
+</app-payment-modal>
 
 <ng-template #loadingOrError>
   <div class="container text-center" style="padding: 50px 0;">
