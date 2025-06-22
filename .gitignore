@@ -48,3 +48,4 @@ Thumbs.db
 .runtimeconfig.json
 
 /src/environments
+/functions/.env.mothers-courses-app-firebase
