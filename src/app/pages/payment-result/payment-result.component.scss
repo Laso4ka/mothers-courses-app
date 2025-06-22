@@ -1,0 +1,167 @@
+@import '../../../styles.scss'; // Для доступу до глобальних змінних, якщо потрібно
+
+.payment-result-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 160px); // Висота екрану мінус хедер та футер (приблизно)
+  padding: 40px var(--container-padding);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.loading-indicator {
+  p {
+    font-size: 1.3em;
+    color: var(--text-color);
+  }
+  // Тут можна додати стилі для CSS спінера, якщо він є
+  // Наприклад:
+  // .spinner { ... }
+}
+
+.result-message-card {
+  background-color: var(--background-color);
+  padding: 30px 40px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+  margin-top: 20px; // Якщо є індикатор завантаження
+
+  .icon-status {
+    font-size: 4.5em; // Збільшимо іконку
+    margin-bottom: 25px;
+    display: block; // Щоб margin працював правильно
+  }
+
+  h2 {
+    font-size: 2em; // Збільшимо заголовок
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+
+  p {
+    font-size: 1.05em;
+    line-height: 1.7;
+    color: var(--text-color);
+    margin-bottom: 12px;
+
+    &.order-id-info {
+      font-size: 0.9em;
+      color: #777;
+      margin-top: 20px;
+    }
+  }
+
+  .actions-container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+
+    .btn {
+      width: 100%;
+      max-width: 300px; // Обмеження ширини кнопок
+      padding: 12px 20px;
+      font-size: 1em;
+      font-weight: 600;
+    }
+  }
+
+  // Стилі для різних статусів
+  &.success {
+    border-top: 5px solid var(--secondary-color); // Помаранчева верхня межа для успіху
+    .icon-status { color: var(--secondary-color); } // Помаранчева іконка
+    h2 { color: var(--accent-color-1); }
+  }
+
+  &.failure, &.error {
+    border-top: 5px solid #e74c3c; // Червона межа для помилки
+    .icon-status { color: #e74c3c; }
+    h2 { color: #c0392b; }
+  }
+
+  &.pending, &.unknown {
+    border-top: 5px solid #f39c12; // Жовта/помаранчева межа для очікування
+    .icon-status { color: #f39c12; }
+    h2 { color: var(--accent-color-1); }
+  }
+}
+
+
+.btn-telegram {
+  background-color: #0088cc; // Колір Telegram
+  border-color: #0088cc;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: darken(#0088cc, 8%);
+    border-color: darken(#0088cc, 8%);
+    color: white; // Переконатися, що колір тексту не змінюється на інший при hover
+  }
+
+  .fab, .fas { // Для іконок Font Awesome
+    margin-right: 10px;
+    font-size: 1.2em;
+  }
+}
+
+.telegram-fallback {
+  margin-top: 25px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: var(--border-radius);
+  font-size: 0.9em;
+  color: var(--text-color);
+
+  p {
+    margin-bottom: 8px;
+    line-height: 1.5;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  a {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: underline;
+    &:hover {
+      color: var(--secondary-color);
+    }
+  }
+}
+
+.btn-secondary-custom { // Якщо стандартний .btn-secondary не підходить
+  background-color: var(--accent-color-1);
+  color: var(--accent-text-color-1);
+  &:hover {
+    background-color: var(--accent-color-1-lighter);
+  }
+}
+
+// Адаптивність
+@media (max-width: 576px) {
+  .result-message-card {
+    padding: 25px 20px;
+
+    h2 {
+      font-size: 1.7em;
+    }
+    .icon-status {
+      font-size: 3.5em;
+    }
+    p {
+      font-size: 0.95em;
+    }
+    .actions-container .btn {
+      font-size: 0.95em;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {Observable} from 'rxjs';
+import {Observable, take} from 'rxjs';
 import {SiteSettingsService} from '../../services/site-settings.service'; // Only if you use ngIf/ngFor etc. Not strictly needed for the example.
 
 @Component({
@@ -12,4 +12,9 @@ import {SiteSettingsService} from '../../services/site-settings.service'; // Onl
 })
 export class FooterComponent {
   currentYear = new Date().getFullYear();
+  telegramBotLink$: Observable<string | undefined>;
+  constructor(private siteSettingsService: SiteSettingsService) {
+    this.telegramBotLink$ = this.siteSettingsService.telegramBotLink$.pipe(take(1))
+  }
+
 }

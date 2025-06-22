@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import { Firestore, doc, docData } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject, tap } from 'rxjs';
+import {Observable, BehaviorSubject, tap, distinctUntilChanged} from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 
-// Модель для налаштувань (може бути частиною HomePageContent або окремою)
-export interface SiteSettings {
-  telegramLink?: string;
-  // ... інші глобальні налаштування ...
+export interface HomePageDataForSettings {
+  heroSection?: {
+    telegramLink?: string;
+  };
+  telegramBotLink?: string;
 }
 
 @Injectable({
@@ -14,20 +15,25 @@ export interface SiteSettings {
 })
 export class SiteSettingsService {
   private settingsDocPath = 'homePageContent/main'; // Шлях до документа
-  public globalTelegramLink$: Observable<string | undefined>;
+  public readonly globalTelegramLink$: Observable<string | undefined>;
+  public readonly telegramBotLink$: Observable<string | undefined>;
+  private firestore: Firestore = inject(Firestore);
 
-  constructor(private firestore: Firestore) { // Інжекція Firestore
+  constructor() {
     const contentDocRef = doc(this.firestore, this.settingsDocPath);
-    this.globalTelegramLink$ = (docData(contentDocRef) as Observable<any>).pipe(
-      map(content => {
-        if (content && content.heroSection && content.heroSection.telegramLink) {
-          return content.heroSection.telegramLink;
-        } else if (content && content.globalTelegramLink) {
-          return content.globalTelegramLink;
-        }
-        return undefined;
-      }),
+
+    const siteSettings$ = (docData(contentDocRef) as Observable<HomePageDataForSettings | undefined>).pipe(
       shareReplay(1)
+    );
+
+    this.globalTelegramLink$ = siteSettings$.pipe(
+      map(settings => settings?.heroSection?.telegramLink),
+      distinctUntilChanged()
+    );
+
+    this.telegramBotLink$ = siteSettings$.pipe(
+      map(settings => settings?.telegramBotLink),
+      distinctUntilChanged()
     );
   }
 }

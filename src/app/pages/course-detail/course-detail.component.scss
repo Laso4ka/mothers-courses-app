@@ -253,6 +253,11 @@
 .text-blocks-section {
   .text-block {
     margin-bottom: 25px;
+
+    .icon-container{
+      display: flex;
+      align-items: center;
+    }
     h3 {
       font-size: 1.3em;
       color: var(--accent-color-1);
@@ -280,15 +285,15 @@
     color: var(--text-color);
     font-size: 0.95em;
   }
-
-  .target-audience-icon {
-    width: 5rem;
-    height: 5rem;
-    object-fit: contain;
-    flex-shrink: 0;
-  }
 }
 
+.icon-img {
+  width: 5rem;
+  height: 5rem;
+  object-fit: contain;
+  flex-shrink: 0;
+  margin: 0 auto;
+}
 
 .custom-list-icons {
   list-style-type: none; // Прибираємо стандартні маркери

@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, serverTimestamp } from '@angular/fire/firestore';
+import {Firestore, collection, addDoc, serverTimestamp, query, where, limit, collectionData} from '@angular/fire/firestore';
+import {map, Observable} from 'rxjs';
 
 export interface Order {
-  id?: string; // Буде додано Firestore
+  id?: string;
   telegramUsername: string;
   phoneNumber: string;
   courseId: string;
   courseTitle: string;
   pricePaid: number;
-  paymentStatus: string; // 'success', 'failure', 'sandbox', etc.
+  paymentStatus: string;
   liqpayOrderId: string;
-  paymentTimestamp: Date | any; // Використовуємо any для serverTimestamp
-  userId?: string; // Опціонально, якщо є аутентифікація користувачів
+  paymentTimestamp: Date | any;
+  userId?: string;
 }
 
 @Injectable({
@@ -35,5 +36,14 @@ export class OrderService {
       console.error("Error creating order: ", e);
       throw e;
     }
+  }
+
+  getOrderByLiqPayOrderId(liqpayOrderId: string | null): Observable<Order | null> {
+    const ordersCollection = collection(this.firestore, this.ordersCollectionPath);
+    const q = query(ordersCollection, where('liqpayOrderId', '==', liqpayOrderId), limit(1));
+
+    return collectionData(q, {idField: 'id'}).pipe(
+      map(orders => orders.length > 0 ? orders[0] as Order : null)
+    );
   }
 }

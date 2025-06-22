@@ -54,12 +54,14 @@
       <section class="course-section text-blocks-section">
 
         <div class="target-audience-content" *ngIf="course.targetAudience">
-          <img *ngIf="course.targetAudience.iconBefore" [src]="course.targetAudience.iconBefore" alt="Іконка" class="target-audience-icon icon-before">
+          <img *ngIf="course.targetAudience.iconBefore" [src]="course.targetAudience.iconBefore" alt="Іконка" class="target-audience-icon icon-img icon-before">
           <div [innerHTML]="course.targetAudience.text | replaceLineBreaks"></div>
-          <img *ngIf="course.targetAudience.iconAfter" [src]="course.targetAudience.iconAfter" alt="Іконка" class="target-audience-icon icon-after">
         </div>
 
         <div class="text-block" *ngIf="course.learningOutcomes && course.learningOutcomes.length > 0">
+          <div class="icon-container" *ngIf="course.learningOutcomesIconUrl">
+            <img [src]="course.learningOutcomesIconUrl" alt="Іконка Застережень" class="icon-img info-icon">
+          </div>
           <h2>Застереження та протипоказання до виконання вправ:</h2>
           <ul class="custom-list-icons">
             <li *ngFor="let outcome of course.learningOutcomes">{{ outcome }}</li>

@@ -11,7 +11,7 @@ export class PaymentService {
   constructor(private http: HttpClient) {}
 
   createLiqpayData(course: { id: string; title: string; price: number }) {
-    return this.http.post<{ data: string; signature: string }>(
+    return this.http.post<{ data: string; signature: string,  generated_order_id: string}>(
       this.functionUrl,
       { course }
     );

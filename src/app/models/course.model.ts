@@ -7,7 +7,6 @@ export interface CourseDetailBlock { // Для блоків "фото зліва
 export interface TargetAudience {
   text: string;
   iconBefore?: string;
-  iconAfter?: string;
 }
 
 export interface Course {
@@ -22,7 +21,8 @@ export interface Course {
   longDescription?: string; // Довший опис, якщо потрібно (альтернатива або доповнення до description)
   whatsIncluded?: string[]; // Список того, що входить в курс (для одного з текстових блоків 7-9)
   targetAudience?: TargetAudience; // Цільова аудиторія (для одного з текстових блоків 7-9)
-  learningOutcomes?: string[]; // Результати навчання (для одного з текстових блоків 7-9)
+  learningOutcomes?: string[];
+  learningOutcomesIconUrl?: string;// Результати навчання (для одного з текстових блоків 7-9)
 
   additionalImage?: { // Для пункту 5 (ще 1 фото і текст опис його)
     imageUrl: string;

@@ -21,6 +21,11 @@
       <ul>
         <li><a routerLink="/">Головна</a></li>
         <li><a routerLink="/courses">Курси</a></li>
+        <li *ngIf="telegramBotLink$ | async as botLink">
+          <a [href]="botLink" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-telegram-plane"></i> Вже купили курс? (Telegram Бот)
+          </a>
+        </li>
       </ul>
     </div>
 

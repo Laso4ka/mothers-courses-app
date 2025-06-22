@@ -1,0 +1,116 @@
+<div class="container payment-result-page">
+  <div *ngIf="isLoading && isBrowser" class="loading-indicator">
+    <p>Обробка результату платежу...</p>
+    <!-- Можна додати спінер сюди -->
+  </div>
+
+  <div *ngIf="!isLoading" class="result-message-card"
+       [class.success]="paymentStatus === 'success' || paymentStatus === 'sandbox'"
+       [class.failure]="paymentStatus === 'failure'"
+       [class.error]="paymentStatus === 'error'"
+       [class.pending]="paymentStatus === 'pending'"
+       [class.unknown]="paymentStatus === 'unknown'" >
+
+    <ng-container [ngSwitch]="paymentStatus">
+      <div *ngSwitchCase="'success'">
+        <i class="fas fa-check-circle icon-status"></i>
+        <h2>Оплата успішна!</h2>
+        <p>Дякуємо за вашу покупку. Доступ до курсу "{{ orderDetails?.courseTitle || 'обраний курс' }}" буде надано найближчим часом.</p>
+
+        <ng-container *ngIf="telegramBotLink">
+          <p>Для отримання доступу, будь ласка, перейдіть до нашого Telegram-бота.</p>
+          <div class="actions-container">
+            <button (click)="tryOpenTelegramBot(orderDetails?.telegramUsername)" class="btn btn-telegram">
+              <i class="fab fa-telegram-plane"></i> Відкрити Telegram Бота
+            </button>
+            <button (click)="navigateToCourses()" class="btn btn-secondary-custom">Переглянути інші курси</button>
+          </div>
+          <div *ngIf="showTelegramFallback" class="telegram-fallback">
+            <p>Телеграм не відкрився автоматично?</p>
+            <p>Будь ласка, перейдіть за посиланням вручну:
+              <a [href]="telegramBotLink" target="_blank" rel="noopener noreferrer">{{ telegramBotLink }}</a>
+            </p>
+            <p *ngIf="orderDetails?.telegramUsername">Або знайдіть нашого бота в Telegram <strong>test_for21_bot</strong></p>
+          </div>
+        </ng-container>
+        <div *ngIf="!telegramBotLink" class="actions-container"> <!-- Якщо посилання на бота немає -->
+          <button (click)="navigateToCourses()" class="btn btn-primary">Переглянути інші курси</button>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="'sandbox'">
+        <i class="fas fa-check-circle icon-status"></i>
+        <h2>Тестова оплата успішна!</h2>
+        <p>Це був тестовий платіж. Дякуємо!</p>
+        <p *ngIf="orderIdFromLiqpay" class="order-id-info">Номер вашого замовлення (тест): {{ orderIdFromLiqpay }}</p>
+        <ng-container *ngIf="telegramBotLink">
+          <p>Для тестування, спробуйте перейти до нашого Telegram-бота.</p>
+          <div class="actions-container">
+            <button (click)="tryOpenTelegramBot(orderDetails?.telegramUsername)" class="btn btn-telegram">
+              <i class="fab fa-telegram-plane"></i> Відкрити Telegram Бота (тест)
+            </button>
+            <button (click)="navigateToCourses()" class="btn btn-secondary-custom">Переглянути інші курси</button>
+          </div>
+          <div *ngIf="showTelegramFallback" class="telegram-fallback">
+            <p>Телеграм не відкрився автоматично?</p>
+            <p>Будь ласка, перейдіть за посиланням вручну:
+              <a [href]="telegramBotLink" target="_blank" rel="noopener noreferrer">{{ telegramBotLink }}</a>
+            </p>
+          </div>
+        </ng-container>
+        <div *ngIf="!telegramBotLink" class="actions-container">
+          <button (click)="navigateToCourses()" class="btn btn-primary">Переглянути інші курси</button>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="'failure'">
+        <i class="fas fa-times-circle icon-status"></i>
+        <h2>Помилка оплати</h2>
+        <p>{{ errorMessage || 'На жаль, ваш платіж не було оброблено.' }}</p>
+        <p>Будь ласка, спробуйте ще раз або зв'яжіться з підтримкою.</p>
+        <div class="actions-container">
+          <button (click)="navigateToHome()" class="btn btn-secondary-custom">Повернутися на головну</button>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="'error'">
+        <i class="fas fa-exclamation-triangle icon-status"></i>
+        <h2>Помилка обробки</h2>
+        <p>{{ errorMessage || 'Виникла помилка при обробці даних платежу.' }}</p>
+        <p>Будь ласка, зв'яжіться з підтримкою, надавши деталі вашої спроби оплати.</p>
+        <div class="actions-container">
+          <button (click)="navigateToHome()" class="btn btn-secondary-custom">Повернутися на головну</button>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="'pending'">
+        <i class="fas fa-hourglass-half icon-status"></i>
+        <h2>Оплата в обробці</h2>
+        <p>Ваш платіж ще обробляється. Зазвичай це займає кілька хвилин.</p>
+        <p>Будь ласка, оновіть сторінку пізніше або перевірте доступ до курсу.</p>
+        <div class="actions-container">
+          <button (click)="navigateToHome()" class="btn btn-secondary-custom">Повернутися на головну</button>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="'unknown_check_later'"> <!-- Для випадку, коли не було параметрів -->
+        <i class="fas fa-hourglass-half icon-status"></i>
+        <h2>Статус платежу</h2>
+        <p>Інформація про ваш платіж обробляється. Будь ласка, перевірте ваш доступ до курсу пізніше або зв'яжіться з нами, якщо виникнуть питання.</p>
+        <div class="actions-container">
+          <button (click)="navigateToHome()" class="btn btn-secondary-custom">Повернутися на головну</button>
+        </div>
+      </div>
+
+      <div *ngSwitchDefault> <!-- Для 'unknown' та інших непередбачених статусів -->
+        <i class="fas fa-question-circle icon-status"></i>
+        <h2>Статус платежу не визначено</h2>
+        <p>Ми не змогли отримати актуальний статус вашого платежу. Якщо ви здійснили оплату, будь ласка, зв'яжіться з нами для підтвердження.</p>
+        <div class="actions-container">
+          <button (click)="navigateToHome()" class="btn btn-secondary-custom">Повернутися на головну</button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+

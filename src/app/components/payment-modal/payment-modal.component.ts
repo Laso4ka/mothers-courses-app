@@ -61,7 +61,7 @@ export class PaymentModalComponent implements OnInit {
       price: this.courseToBuy.price
     }).subscribe({
       next: response => {
-        this.createPendingOrderAndRedirect(response.data, response.signature);
+        this.createPendingOrderAndRedirect(response.data, response.signature, response.generated_order_id);
       },
       error: error => {
         this.isProcessingPayment = false;
@@ -71,19 +71,17 @@ export class PaymentModalComponent implements OnInit {
     });
   }
 
-  private async createPendingOrderAndRedirect(data: string, signature: string): Promise<void> {
+  private async createPendingOrderAndRedirect(data: string, signature: string, generatedOrderId:string): Promise<void> {
     if (this.courseToBuy && this.courseToBuy.id && this.paymentForm.valid) {
-      const orderDetails:Order = {
+      const orderDetails:Omit<Order, 'id' | 'paymentTimestamp'> = {
         telegramUsername: this.paymentForm.value.telegramUsername,
         phoneNumber: this.paymentForm.value.phoneNumber,
         courseId: this.courseToBuy.id,
         courseTitle: this.courseToBuy.title,
         pricePaid: this.courseToBuy.price,
         paymentStatus: 'pending_redirect',
-        paymentTimestamp: new Date(),
-        liqpayOrderId: ''
+        liqpayOrderId: generatedOrderId
       };
-      console.log(data)
 
       try {
        await this.orderService.createOrder(orderDetails);

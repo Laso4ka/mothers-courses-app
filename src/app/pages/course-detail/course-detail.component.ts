@@ -16,7 +16,6 @@ import {CourseService} from '../../services/course.service';
 import {ReplaceLineBreaksPipe} from '../../shared/pipes/replace-line-breaks.pipe';
 import {Course} from '../../models/course.model';
 import {SiteSettingsService} from '../../services/site-settings.service';
-import {PaymentService} from '../../services/payment.service';
 import {PaymentModalComponent} from '../../components/payment-modal/payment-modal.component';
 
 @Component({
@@ -42,7 +41,6 @@ export class CourseDetailComponent implements AfterViewInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     private renderer: Renderer2,
     private siteSettingsService: SiteSettingsService,
-    private paymentService: PaymentService
   ) {
     this.telegramLink$ = this.siteSettingsService.globalTelegramLink$ || "";
     this.telegramLink$.subscribe(el => this.actualTelegramLink = el || "");
@@ -92,49 +90,6 @@ export class CourseDetailComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  // buyCourse(courseId: string | undefined) {
-  //   this.course$.subscribe(course => {
-  //     if (course && courseId) {
-  //       this.paymentService.createLiqpayData({
-  //         id: courseId,
-  //         title: course.title,
-  //         price: course.price
-  //       }).subscribe(response => {
-  //         const { data, signature } = response;
-  //         this.renderLiqpayWidget(data, signature);
-  //       }, error => {
-  //         console.error('Помилка при створенні оплати:', error);
-  //         alert("Помилка при створенні оплати");
-  //       });
-  //     }
-  //   })
-  // }
-  //
-  // renderLiqpayWidget(data: string, signature: string) {
-  //   const script = this.renderer.createElement('script');
-  //   script.src = "https://static.liqpay.ua/libjs/checkout.js";
-  //   script.onload = () => {
-  //     // @ts-ignore
-  //     window.LiqPayCheckoutCallback = function() {
-  //       // @ts-ignore
-  //       LiqPayCheckout.init({
-  //         data,
-  //         signature,
-  //         embedTo: "#liqpay_checkout",
-  //         mode: "embed"
-  //       }).on("liqpay.callback", function(data: any) {
-  //         console.log("liqpay.callback", data.status, data);
-  //       }).on("liqpay.ready", function(data: any) {
-  //         console.log("liqpay.ready", data);
-  //       }).on("liqpay.close", function(data:any) {
-  //         console.log("liqpay.close", data);
-  //       });
-  //     };
-  //   };
-  //   console.log(script);
-  //   this.renderer.appendChild(document.body, script);
-  // }
-
   openPaymentModal(): void {
     console.log(this.currentCourse)
     if (this.currentCourse) {
@@ -152,6 +107,5 @@ export class CourseDetailComponent implements AfterViewInit, OnDestroy {
     console.log('Платіж успішний на сторінці деталей курсу!', paymentData);
     this.showPaymentModal = false; // Закриваємо модалку після успішної оплати
     alert(`Дякуємо за покупку курсу "${this.currentCourse?.title}"! Доступ буде надано незабаром.`);
-    // Тут можна перенаправити на сторінку подяки або оновити UI
   }
 }
