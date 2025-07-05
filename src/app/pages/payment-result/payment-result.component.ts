@@ -79,7 +79,7 @@ export class PaymentResultComponent implements OnInit, OnDestroy {
 
           if ((this.paymentStatus === 'success' || this.paymentStatus === 'sandbox') && this.telegramBotLink) {
             console.log('Attempting to open Telegram bot...');
-            this.tryOpenTelegramBot(order.telegramUsername);
+            this.tryOpenTelegramBot();
           } else if (this.paymentStatus === 'success' || this.paymentStatus === 'sandbox') {
             console.log('Telegram bot link is not available, showing fallback trigger.');
             this.showTelegramFallback = true; // Показати кнопку, якщо посилання на бота немає, але оплата успішна
@@ -112,7 +112,7 @@ export class PaymentResultComponent implements OnInit, OnDestroy {
 
 
 
-  tryOpenTelegramBot(telegramUsername?: string): void {
+  tryOpenTelegramBot(): void {
     console.log(this.telegramBotLink)
     if (!this.isBrowser || !this.telegramBotLink) return;
 

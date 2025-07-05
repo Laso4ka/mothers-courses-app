@@ -81,6 +81,7 @@ exports.createLiqpayData = functions
       });
     });
 
+
 exports.liqpayCallbackHandler = functions
     .https.onRequest(async (req, res) => {
       if (req.method !== "POST") {
@@ -147,7 +148,7 @@ exports.liqpayCallbackHandler = functions
 
         if (status === "success" || status === "sandbox") {
           const userCourseData = {
-            telegramUsername: orderData.telegramUsername, // З оригінального замовлення
+            email: orderData.email, // З оригінального замовлення
             phoneNumber: orderData.phoneNumber, // З оригінального замовлення
             courseId: orderData.courseId, // З оригінального замовлення
             courseTitle: orderData.courseTitle, // З оригінального замовлення

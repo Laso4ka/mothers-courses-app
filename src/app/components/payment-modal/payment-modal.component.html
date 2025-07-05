@@ -8,11 +8,11 @@
 
     <form [formGroup]="paymentForm" (ngSubmit)="proceedToPayment()">
       <div class="form-group">
-        <label for="telegramUsername">Ваш Telegram Username</label>
-        <input type="text" id="telegramUsername" formControlName="telegramUsername" placeholder="@username">
-        <div *ngIf="telegramUsername?.invalid && (telegramUsername?.dirty || telegramUsername?.touched)" class="error-message">
-          <span *ngIf="telegramUsername?.errors?.['required']">Telegram Username обов'язковий.</span>
-          <span *ngIf="telegramUsername?.errors?.['pattern']">Невірний формат Telegram Username (наприклад: &#64;user_name)</span>
+        <label for="email">Ваш Email</label>
+        <input type="text" id="email" formControlName="email" placeholder="test@gmail.com">
+        <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="error-message">
+          <span *ngIf="email?.errors?.['required']">Email обов'язковий.</span>
+          <span *ngIf="email?.errors?.['pattern']">Невірний формат Email(наприклад: test&#64;gmail.com)</span>
         </div>
       </div>
 

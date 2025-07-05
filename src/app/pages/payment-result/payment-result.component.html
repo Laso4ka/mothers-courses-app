@@ -20,7 +20,7 @@
         <ng-container *ngIf="telegramBotLink">
           <p>Для отримання доступу, будь ласка, перейдіть до нашого Telegram-бота.</p>
           <div class="actions-container">
-            <button (click)="tryOpenTelegramBot(orderDetails?.telegramUsername)" class="btn btn-telegram">
+            <button (click)="tryOpenTelegramBot()" class="btn btn-telegram">
               <i class="fab fa-telegram-plane"></i> Відкрити Telegram Бота
             </button>
             <button (click)="navigateToCourses()" class="btn btn-secondary-custom">Переглянути інші курси</button>
@@ -30,7 +30,7 @@
             <p>Будь ласка, перейдіть за посиланням вручну:
               <a [href]="telegramBotLink" target="_blank" rel="noopener noreferrer">{{ telegramBotLink }}</a>
             </p>
-            <p *ngIf="orderDetails?.telegramUsername">Або знайдіть нашого бота в Telegram <strong>test_for21_bot</strong></p>
+            <p *ngIf="orderDetails?.email">Або знайдіть нашого бота в Telegram <strong>test_for21_bot</strong></p>
           </div>
         </ng-container>
         <div *ngIf="!telegramBotLink" class="actions-container"> <!-- Якщо посилання на бота немає -->
@@ -46,7 +46,7 @@
         <ng-container *ngIf="telegramBotLink">
           <p>Для тестування, спробуйте перейти до нашого Telegram-бота.</p>
           <div class="actions-container">
-            <button (click)="tryOpenTelegramBot(orderDetails?.telegramUsername)" class="btn btn-telegram">
+            <button (click)="tryOpenTelegramBot()" class="btn btn-telegram">
               <i class="fab fa-telegram-plane"></i> Відкрити Telegram Бота (тест)
             </button>
             <button (click)="navigateToCourses()" class="btn btn-secondary-custom">Переглянути інші курси</button>

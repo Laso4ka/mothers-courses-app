@@ -29,14 +29,14 @@ export class PaymentModalComponent implements OnInit {
     private renderer: Renderer2
   ) {
     this.paymentForm = this.fb.group({
-      telegramUsername: ['', [Validators.required, Validators.pattern(/^@?[a-zA-Z0-9_]{5,32}$/)]],
+      email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
       phoneNumber: ['', [Validators.required, Validators.pattern(/^\+?3?8?(0\d{9})$/)]]
     });
   }
 
   ngOnInit(): void {}
 
-  get telegramUsername() { return this.paymentForm.get('telegramUsername'); }
+  get email() { return this.paymentForm.get('email'); }
   get phoneNumber() { return this.paymentForm.get('phoneNumber'); }
 
   closeModal(): void {
@@ -74,7 +74,7 @@ export class PaymentModalComponent implements OnInit {
   private async createPendingOrderAndRedirect(data: string, signature: string, generatedOrderId:string): Promise<void> {
     if (this.courseToBuy && this.courseToBuy.id && this.paymentForm.valid) {
       const orderDetails:Omit<Order, 'id' | 'paymentTimestamp'> = {
-        telegramUsername: this.paymentForm.value.telegramUsername,
+        email: this.paymentForm.value.email,
         phoneNumber: this.paymentForm.value.phoneNumber,
         courseId: this.courseToBuy.id,
         courseTitle: this.courseToBuy.title,

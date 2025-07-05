@@ -4,7 +4,7 @@ import {map, Observable} from 'rxjs';
 
 export interface Order {
   id?: string;
-  telegramUsername: string;
+  email: string;
   phoneNumber: string;
   courseId: string;
   courseTitle: string;
@@ -27,7 +27,7 @@ export class OrderService {
     try {
       const orderPayload = {
         ...orderData,
-        paymentTimestamp: serverTimestamp() // Додаємо мітку часу сервера
+        paymentTimestamp: serverTimestamp()
       };
       const ordersCollection = collection(this.firestore, this.ordersCollectionPath);
       const docRef = await addDoc(ordersCollection, orderPayload);
