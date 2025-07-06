@@ -17,7 +17,7 @@ const APP_BASE_URL = defineString("APP_BASE_URL", {
 });
 
 exports.createLiqpayData = functions
-    .https.onRequest(async (req, res) => {
+    .https.onRequest({region: "europe-central2"}, async (req, res) => {
       cors(req, res, async () => {
         if (req.method !== "POST") {
           return res.status(405).send({error: "Method Not Allowed"});
@@ -55,7 +55,7 @@ exports.createLiqpayData = functions
         }
 
         const orderId = `course_${clientCourseData.id}_${Date.now()}`;
-        const SERVER_CALLBACK_URL = "https://us-central1-mothers-courses-app-firebase.cloudfunctions.net/liqpayCallbackHandler";
+        const SERVER_CALLBACK_URL = "https://europe-central2-mothers-courses-app-firebase.cloudfunctions.net/liqpayCallbackHandler";
         const resultUrlWithParams = `${APP_BASE_URL.value()}/payment-result?liqpay_order_id=${encodeURIComponent(orderId)}`;
 
         const payload = {
@@ -83,7 +83,7 @@ exports.createLiqpayData = functions
 
 
 exports.liqpayCallbackHandler = functions
-    .https.onRequest(async (req, res) => {
+    .https.onRequest({region: "europe-central2"}, async (req, res) => {
       if (req.method !== "POST") {
         console.log("LiqPay Callback: Method Not Allowed -", req.method);
         return res.status(405).send("Method Not Allowed");
